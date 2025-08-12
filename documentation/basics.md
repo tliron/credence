@@ -4,20 +4,20 @@ Credence: Basics Guide
 Quickstart
 ----------
 
-First, [get it](https://github.com/tliron/rust-credence/releases).
+First, [get it](https://github.com/tliron/credence/releases).
 
 > We currently provide binaries for Linux, specifically with a relatively recent version of [glibc](https://sourceware.org/glibc/). If that's not what you have then you can build Credence yourself on your target machine by [getting Rust](https://www.rust-lang.org/tools/install) and then running `cargo install credence`. If building locally is impossible or doesn't work for your platform then you can always run our binary in a container. Note that it's also possible to build for Linux using [musl](https://musl.libc.org/) instead of glibc.
 
-Then run `credence`, pointing it at one (or more) directories of site assets. You can start with the [examples](../assets/examples) included in the download package or this repository. For example (with extra verbose logs):
+Then run `credence`, pointing it at one (or more) directories of site assets. You can start with the [examples](../examples) included in the download package or this repository. For example (with extra verbose logs):
 
 ```
-git clone https://github.com/tliron/rust-credence.git
-credence -vv rust-credence/assets/examples/blog
+git clone https://github.com/tliron/credence.git
+credence -vv credence/examples/blog
 ```
 
 You should now be able to see the site locally at [`http://localhost:8000`](http://localhost:8000) and follow the log messages in the terminal.
 
-Credence will look for a configuration file at `.credence/credence.yaml` in your site assets directory. If it doesn't find the file then it will use sensible defaults. [Here's](../assets/examples/defaults/.credence/credence.yaml) an example configuration file that has all the documentation and defaults.
+Credence will look for a configuration file at `.credence/credence.yaml` in your site assets directory. If it doesn't find the file then it will use sensible defaults. [Here's](../examples/defaults/.credence/credence.yaml) an example configuration file that has all the documentation and defaults.
 
 See the [advanced guide](advanced.md) guide for more information about serving multiple sites from the same process.
 
