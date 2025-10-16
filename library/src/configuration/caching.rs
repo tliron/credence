@@ -2,13 +2,11 @@ use super::super::resolve::*;
 
 use {
     compris::resolve::*,
-    kutil::{
-        cli::depict::*,
-        http::cache::{implementation::moka::*, *},
-        std::metric::*,
-    },
+    depiction::*,
+    kutil::std::metric::*,
     moka::future::Cache,
     std::time::*,
+    tower_http_response_cache::cache::{implementation::moka::*, *},
 };
 
 //

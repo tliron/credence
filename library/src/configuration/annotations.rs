@@ -1,6 +1,7 @@
 use {
     compris::{resolve::*, *},
-    kutil::{cli::depict::*, std::immutable::*},
+    depiction::*,
+    kutil::std::immutable::*,
 };
 
 //

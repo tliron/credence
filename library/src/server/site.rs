@@ -4,7 +4,12 @@ use super::{
     routers::*,
 };
 
-use {axum::routing::*, kutil::http::axum::*, std::path::*};
+use {
+    axum::routing::*,
+    kutil::http::axum::*,
+    problemo::{common::*, *},
+    std::{net::SocketAddr, path::*},
+};
 
 //
 // Site
@@ -22,16 +27,16 @@ pub struct Site {
 
 impl Site {
     /// Constructor.
-    pub fn new<PathT>(assets_path: PathT, shutdown: &Shutdown) -> Result<Self, ConfigurationError>
+    pub fn new<PathT>(assets_path: PathT, shutdown: &Shutdown<SocketAddr>) -> Result<Self, Problem>
     where
         PathT: AsRef<Path>,
     {
         let assets_path = assets_path.as_ref();
 
         if !assets_path.exists() {
-            return Err(format!("assets path does not exist: {}", assets_path.display()).into());
+            return Err(InvalidError::new(format!("assets path does not exist: {}", assets_path.display())).into());
         } else if !assets_path.is_dir() {
-            return Err(format!("assets path is not a directory: {}", assets_path.display()).into());
+            return Err(InvalidError::new(format!("assets path is not a directory: {}", assets_path.display())).into());
         }
 
         let configuration = load_configuration(assets_path)?;
@@ -42,7 +47,7 @@ impl Site {
     }
 
     /// Create a [Coordinator] if configured.
-    pub fn new_coordinator(&self) -> Result<Option<Coordinator>, ConfigurationError> {
-        Ok(self.configuration.files.coordinate.new_coordinator()?)
+    pub fn new_coordinator(&self) -> Result<Option<Coordinator>, Problem> {
+        Ok(self.configuration.files.coordinate.new_coordinator().via(LowLevelError)?)
     }
 }

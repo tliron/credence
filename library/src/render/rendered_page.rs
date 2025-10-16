@@ -79,7 +79,7 @@ impl RenderedPage {
         PathT: AsRef<Path>,
     {
         let path = path.as_ref();
-        let mut file = File::open(path).await.with_path(path)?;
+        let mut file = BufReader::new(File::open(path).await.with_path(path)?);
         let mut string = String::default();
         file.read_to_string(&mut string).await?;
 
@@ -90,17 +90,17 @@ impl RenderedPage {
     }
 
     /// Create a [RenderContext].
-    pub fn context<'own>(
-        &'own self,
+    pub fn context<'context>(
+        &'context self,
         socket: Option<Socket>,
         uri_path: ByteString,
         original_uri_path: Option<ByteString>,
         query: Option<QueryMap>,
         last_modified: Option<HttpDate>,
         is_json: (bool, bool),
-        templates: &'own Templates,
-        configuration: &'own CredenceConfiguration,
-    ) -> RenderContext<'own> {
+        templates: &'context Templates,
+        configuration: &'context CredenceConfiguration,
+    ) -> RenderContext<'context> {
         // Our variables override global variables
         let mut variables = configuration.render.variables.clone();
         for (key, value) in &self.annotations.variables {

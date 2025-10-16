@@ -2,7 +2,8 @@ use super::super::resolve::*;
 
 use {
     compris::resolve::*,
-    kutil::{cli::depict::*, http::*, std::metric::*},
+    depiction::*,
+    kutil::{http::*, std::metric::*},
 };
 
 //

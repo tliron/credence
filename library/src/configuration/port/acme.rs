@@ -1,12 +1,11 @@
-use super::super::error::*;
-
 use {
     compris::resolve::*,
+    depiction::*,
     kutil::{
-        cli::depict::*,
-        http::tls::{ACME as KutilACME, *},
         std::immutable::*,
+        tls::{ACME as KutilACME, *},
     },
+    problemo::*,
     std::path::*,
 };
 
@@ -35,7 +34,7 @@ pub struct ACME {
 
 impl ACME {
     /// Validate.
-    pub fn validate<PathT>(&mut self, base_path: PathT) -> Result<(), ConfigurationError>
+    pub fn validate<PathT>(&mut self, base_path: PathT) -> Result<(), Problem>
     where
         PathT: AsRef<Path>,
     {

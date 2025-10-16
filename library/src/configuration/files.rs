@@ -1,10 +1,9 @@
 use super::{
     super::{render::*, util::*},
     coordinate::*,
-    error::*,
 };
 
-use {compris::resolve::*, kutil::cli::depict::*, std::path::*};
+use {compris::resolve::*, depiction::*, problemo::*, std::path::*};
 
 //
 // FilesConfiguration
@@ -46,7 +45,7 @@ impl FilesConfiguration {
     }
 
     /// Validate.
-    pub fn validate<PathT>(&mut self, base_path: PathT) -> Result<(), ConfigurationError>
+    pub fn validate<PathT>(&mut self, base_path: PathT) -> Result<(), Problem>
     where
         PathT: AsRef<Path>,
     {
