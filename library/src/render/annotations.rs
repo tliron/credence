@@ -6,6 +6,7 @@ use super::{
 use {
     compris::{annotate::*, normal::*, parse::Parser, resolve::*, *},
     kutil::std::{collections::*, immutable::*, string::*},
+    problemo::{common::*, *},
 };
 
 //
@@ -51,7 +52,7 @@ impl Annotations {
     }
 
     /// Template.
-    pub fn template<'own>(&'own self, configuration: &'own RenderConfiguration) -> &'own str {
+    pub fn template<'this>(&'this self, configuration: &'this RenderConfiguration) -> &'this str {
         self.template.as_ref().unwrap_or(&configuration.default_template)
     }
 
@@ -63,9 +64,11 @@ impl Annotations {
                     return annotations;
                 }
 
-                Err(ResolveError::Missing) => {}
-
-                Err(error) => tracing::error!("{}: {}", identifier, error),
+                Err(problem) => {
+                    if !problem.has_type::<MissingError>() {
+                        tracing::error!("{}: {}", identifier, problem);
+                    }
+                }
             },
 
             Err(error) => tracing::error!("{}: {}", identifier, error),

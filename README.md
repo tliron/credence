@@ -1,5 +1,5 @@
 [![crates.io](https://img.shields.io/crates/v/credence?color=%23227700)](https://crates.io/crates/credence-lib)
-[![docs.rs](https://img.shields.io/badge/docs.rs-latest?color=grey)](https://docs.rs/credence-lib/latest/credence_lib/)
+[![docs.rs](https://img.shields.io/badge/docs.rs-latest?color=grey)](https://docs.rs/credence-lib)
 
 Credence
 ========

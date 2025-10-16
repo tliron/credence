@@ -1,16 +1,16 @@
-use credence_lib::configuration::ConfigurationError;
-
-use super::{cli::*, errors::*};
+use super::root::*;
 
 use {
     credence_lib::server::*,
-    kutil::{cli::depict::*, http::axum::*},
-    std::{io, time::*},
+    depiction::*,
+    kutil::http::axum::*,
+    problemo::{common::*, *},
+    std::{io, net::SocketAddr, time::*},
 };
 
-impl CLI {
+impl Root {
     /// Start.
-    pub async fn start(&self) -> Result<(), MainError> {
+    pub async fn start(&self) -> Result<(), Problem> {
         let shutdown = self.shutdown()?;
         let sites = self.sites(&shutdown)?;
 
@@ -23,7 +23,7 @@ impl CLI {
         // Serve!
         let join_set = servers.start()?;
         if join_set.is_empty() {
-            return Err(ConfigurationError::from("no servers").into());
+            return Err(InvalidError::new("no servers").into());
         }
 
         // Coordinators
@@ -53,8 +53,7 @@ impl CLI {
         Ok(())
     }
 
-    /// Sites.
-    pub fn sites(&self, shutdown: &Shutdown) -> Result<Vec<Site>, MainError> {
+    fn sites(&self, shutdown: &Shutdown<SocketAddr>) -> Result<Vec<Site>, Problem> {
         let mut sites = Vec::default();
 
         for assets_path in &self.assets_paths {
@@ -71,8 +70,7 @@ impl CLI {
         Ok(sites)
     }
 
-    /// [Shutdown].
-    pub fn shutdown(&self) -> io::Result<Shutdown> {
+    fn shutdown(&self) -> io::Result<Shutdown<SocketAddr>> {
         let shutdown = Shutdown::new(Some(Duration::from_secs(self.grace_period)));
         shutdown.on_signals()?;
         Ok(shutdown)

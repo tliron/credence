@@ -101,7 +101,7 @@ impl Renderer {
 impl_resolve_from_str!(Renderer);
 
 impl RenderPreparer for Renderer {
-    async fn prepare<'own>(&self, context: &mut RenderContext<'own>) -> Result<(), StatusCode> {
+    async fn prepare<'this>(&self, context: &mut RenderContext<'this>) -> Result<(), StatusCode> {
         if !context.variables.contains_key("content") {
             if let Some(content) = context.rendered_page.content.as_ref() {
                 let content = self.render(content).await?;

@@ -1,0 +1,132 @@
+use {
+    compris::{annotate::*, parse::*, resolve::*},
+    depiction::*,
+    derive_more::*,
+};
+
+//
+// ConfigurationError
+//
+
+// /// Configuration error.
+// pub type Problem = Problem<ConfigurationError>;
+
+// /// Configuration error.
+// #[derive(Debug, Display, Error, PartialEq, Eq)]
+// pub enum ConfigurationError {
+//     /// Missing.
+//     #[display("missing configuration")]
+//     Missing,
+
+//     /// Validation.
+//     #[display("invalid configuration")]
+//     Invalid,
+// }
+
+// convert_problem_into_child!(ParseError, ConfigurationError, Invalid);
+// convert_problem_into_child!(ResolveError, ConfigurationError, Invalid);
+// convert_problem_into_child!(ResolveErrors, ConfigurationError, Invalid);
+
+// convert_problem_into_child!(io::Error, ConfigurationError, LowLevel);
+// convert_problem_into_child!(TlsContainerError, ConfigurationError, LowLevel);
+// convert_problem_into_child!(notify::Error, ConfigurationError, LowLevel);
+
+// TODO: for any report check for DepictionAttachments or DepictionsAttachment
+
+///
+pub struct ConfigurationErrorFormatter;
+
+// impl hooks::context_formatter::ContextFormatterHook<ConfigurationErrorContext> for ConfigurationErrorFormatter {
+//     fn display(
+//         &self,
+//         report: ReportRef<'_, ConfigurationErrorContext, markers::Uncloneable, markers::Local>,
+//         formatter: &mut std::fmt::Formatter<'_>,
+//     ) -> std::fmt::Result {
+//         write!(formatter, "display")
+//     }
+
+//     fn display_preformatted(
+//         &self,
+//         report: ReportRef<'_, preformatted::PreformattedContext, markers::Uncloneable, markers::Local>,
+//         formatter: &mut std::fmt::Formatter<'_>,
+//     ) -> std::fmt::Result {
+//         write!(formatter, "displayp")
+//     }
+
+//     fn debug(
+//         &self,
+//         report: ReportRef<'_, ConfigurationErrorContext, markers::Uncloneable, markers::Local>,
+//         formatter: &mut std::fmt::Formatter<'_>,
+//     ) -> std::fmt::Result {
+//         write!(formatter, "debug")
+//     }
+
+//     fn debug_preformatted(
+//         &self,
+//         report: ReportRef<'_, preformatted::PreformattedContext, markers::Uncloneable, markers::Local>,
+//         formatter: &mut std::fmt::Formatter<'_>,
+//     ) -> std::fmt::Result {
+//         write!(formatter, "debugp")
+//     }
+
+//     // fn preferred_context_formatting_style(
+//     //     &self,
+//     //     report: ReportRef<'_, markers::Dynamic, markers::Uncloneable, markers::Local>,
+//     //     report_formatting_function: handlers::FormattingFunction,
+//     // ) -> handlers::ContextFormattingStyle {
+//     //     handlers::ContextFormattingStyle {
+//     //         function: F
+//     //     }
+//     // }
+// }
+
+// ///
+// pub struct ConfigurationErrorHandler;
+
+// impl handlers::ContextHandler<ConfigurationErrorContext> for ConfigurationErrorHandler {
+//     fn source(value: &ConfigurationErrorContext) -> Option<&(dyn core::error::Error + 'static)> {
+//         None
+//     }
+
+//     fn display(value: &ConfigurationErrorContext, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+//         write!(formatter, "display")
+//     }
+
+//     fn debug(value: &ConfigurationErrorContext, formatter: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+//         write!(formatter, "debug")
+//     }
+// }
+
+// impl ConfigurationError {
+//     /// Prints validation errors.
+//     pub fn eprint_validation_errors(&self) -> bool {
+//         // match self {
+//         //     Self::Validation(errors) => {
+//         //         errors.annotated_depictions(Some("Invalid CredenceConfiguration".into())).eprint_default_depiction();
+//         //         true
+//         //     }
+
+//         //     _ => false,
+//         // }
+//         todo!();
+//     }
+// }
+
+// impl From<ResolveErrors<WithAnnotations>> for ConfigurationError {
+//     fn from(errors: ResolveErrors<WithAnnotations>) -> Self {
+//         Self::Validation(errors)
+//     }
+// }
+
+// impl From<String> for ConfigurationError {
+//     fn from(message: String) -> Self {
+//         let error: ResolveError<_> = message.into();
+//         Self::Validation(error.into())
+//     }
+// }
+
+// impl From<&str> for ConfigurationError {
+//     fn from(message: &str) -> Self {
+//         String::from(message).into()
+//     }
+// }

@@ -1,8 +1,10 @@
-use super::{super::error::*, loadable_bytes::*};
+use super::loadable_bytes::*;
 
 use {
     compris::resolve::*,
-    kutil::{cli::depict::*, std::immutable::*},
+    depiction::*,
+    kutil::std::immutable::*,
+    problemo::{common::*, *},
     std::path::*,
 };
 
@@ -26,7 +28,7 @@ pub struct Key {
 
 impl Key {
     /// Validate.
-    pub fn validate<PathT>(&mut self, base_path: PathT) -> Result<(), ConfigurationError>
+    pub fn validate<PathT>(&mut self, base_path: PathT) -> Result<(), Problem>
     where
         PathT: AsRef<Path>,
     {
@@ -46,7 +48,7 @@ impl Key {
     }
 
     /// Ensures both certificates and private key are loaded.
-    pub fn to_bytes(&self) -> Result<(Bytes, Bytes), ConfigurationError> {
-        Ok((self.certificates.to_bytes()?, self.private_key.to_bytes()?))
+    pub fn to_bytes(&self) -> Result<(Bytes, Bytes), Problem> {
+        Ok((self.certificates.to_bytes().via(LowLevelError)?, self.private_key.to_bytes().via(LowLevelError)?))
     }
 }
