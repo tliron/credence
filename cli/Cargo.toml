@@ -3,7 +3,7 @@ edition = "2024"
 
 name = "credence"
 description = "An unfussy web server designed for straightforward authoring and scalable performance"
-version = "0.0.4"
+version = "0.0.5"
 rust-version = "1.90"
 
 license = "MIT OR Apache-2.0"
