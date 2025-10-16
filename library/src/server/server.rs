@@ -8,8 +8,9 @@ use {
     ::axum::middleware::*,
     axum_server::*,
     kutil::{
-        http::{axum::*, tls::*},
+        http::axum::*,
         std::{future::*, immutable::*, string::*},
+        tls::*,
     },
     std::net::*,
 };
@@ -127,7 +128,7 @@ impl Server {
     pub fn start(
         self,
         socket_address: SocketAddr,
-        server_handle: &Handle,
+        server_handle: &Handle<SocketAddr>,
     ) -> Result<Option<CapturedIoTask>, ConfigurationError> {
         let router = match self.host_router.into_router() {
             Some(router) => router,

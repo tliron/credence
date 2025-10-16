@@ -1,14 +1,13 @@
-use credence_lib::configuration::ConfigurationError;
-
-use super::{cli::*, errors::*};
+use super::{super::errors::*, root::*};
 
 use {
-    credence_lib::server::*,
-    kutil::{cli::depict::*, http::axum::*},
-    std::{io, time::*},
+    credence_lib::{configuration::*, server::*},
+    depiction::*,
+    kutil::http::axum::*,
+    std::{io, net::SocketAddr, time::*},
 };
 
-impl CLI {
+impl Root {
     /// Start.
     pub async fn start(&self) -> Result<(), MainError> {
         let shutdown = self.shutdown()?;
@@ -53,8 +52,7 @@ impl CLI {
         Ok(())
     }
 
-    /// Sites.
-    pub fn sites(&self, shutdown: &Shutdown) -> Result<Vec<Site>, MainError> {
+    fn sites(&self, shutdown: &Shutdown<SocketAddr>) -> Result<Vec<Site>, MainError> {
         let mut sites = Vec::default();
 
         for assets_path in &self.assets_paths {
@@ -71,8 +69,7 @@ impl CLI {
         Ok(sites)
     }
 
-    /// [Shutdown].
-    pub fn shutdown(&self) -> io::Result<Shutdown> {
+    fn shutdown(&self) -> io::Result<Shutdown<SocketAddr>> {
         let shutdown = Shutdown::new(Some(Duration::from_secs(self.grace_period)));
         shutdown.on_signals()?;
         Ok(shutdown)

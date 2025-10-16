@@ -4,10 +4,8 @@ use {
     std::path::*,
 };
 
-// https://docs.rs/clap/latest/clap/_derive/index.html
-
 //
-// CLI
+// Root
 //
 
 /// An unfussy web server designed for straightforward authoring and scalable performance
@@ -19,9 +17,10 @@ use {
     disable_help_flag = true,
     disable_help_subcommand = true,
     disable_version_flag = true,
+    arg_required_else_help = true,
     styles = clap_styles())
 ]
-pub struct CLI {
+pub struct Root {
     #[command(subcommand)]
     pub subcommand: Option<SubCommand>,
 

@@ -2,8 +2,8 @@ use super::{super::error::*, host::*};
 
 use {
     compris::resolve::*,
+    depiction::*,
     kutil::{
-        cli::depict::*,
         io::network::ip::*,
         std::{immutable::*, sync::*},
     },
@@ -32,6 +32,7 @@ pub struct Port {
     #[resolve]
     #[depict(option, as(display), style(string))]
     pub address: Option<IpAddr>,
+
     /// Optional zone for IPv6 address.
     #[resolve]
     #[depict(option, style(string))]

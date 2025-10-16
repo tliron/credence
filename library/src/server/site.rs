@@ -4,7 +4,11 @@ use super::{
     routers::*,
 };
 
-use {axum::routing::*, kutil::http::axum::*, std::path::*};
+use {
+    axum::routing::*,
+    kutil::http::axum::*,
+    std::{net::SocketAddr, path::*},
+};
 
 //
 // Site
@@ -22,7 +26,7 @@ pub struct Site {
 
 impl Site {
     /// Constructor.
-    pub fn new<PathT>(assets_path: PathT, shutdown: &Shutdown) -> Result<Self, ConfigurationError>
+    pub fn new<PathT>(assets_path: PathT, shutdown: &Shutdown<SocketAddr>) -> Result<Self, ConfigurationError>
     where
         PathT: AsRef<Path>,
     {

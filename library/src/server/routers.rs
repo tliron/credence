@@ -15,11 +15,16 @@ use {
         },
         std::immutable::*,
     },
+    std::net::SocketAddr,
     tower_http::{limit::*, services::*, timeout::*, trace::*},
 };
 
 /// Create a Credence site router.
-pub fn new_site_router<CacheT>(shutdown: &Shutdown, cache: &CacheT, configuration: &CredenceConfiguration) -> Router
+pub fn new_site_router<CacheT>(
+    shutdown: &Shutdown<SocketAddr>,
+    cache: &CacheT,
+    configuration: &CredenceConfiguration,
+) -> Router
 where
     CacheT: Cache<CommonCacheKey>,
 {
@@ -45,7 +50,10 @@ where
         .merge(router)
         .layer(map_request_with_state(FacadeMiddleware::new(configuration.clone()), FacadeMiddleware::function))
         .layer(RequestBodyLimitLayer::new(configuration.requests.max_body_size.inner.into()))
-        .layer(TimeoutLayer::new(configuration.requests.max_duration.inner.into()))
+        .layer(TimeoutLayer::with_status_code(
+            StatusCode::REQUEST_TIMEOUT,
+            configuration.requests.max_duration.inner.into(),
+        ))
         .layer(TraceLayer::new_for_http());
 
     router

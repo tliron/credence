@@ -1,7 +1,7 @@
-use super::{super::configuration::*, server::*, site::*};
+use super::{super::configuration::*, server::Server, site::*};
 
 use {
-    axum_server::Handle,
+    axum_server::*,
     kutil::std::collections::*,
     std::{io, net::*},
     tokio::task::*,
@@ -19,7 +19,7 @@ use {
 /// [Shutdown](kutil::http::axum::Shutdown).
 pub struct Servers {
     /// Axum server handle.
-    pub handle: Handle,
+    pub handle: Handle<SocketAddr>,
 
     /// Servers.
     pub servers: FastHashMap<SocketAddr, Server>,
@@ -27,7 +27,7 @@ pub struct Servers {
 
 impl Servers {
     /// Constructor.
-    pub fn new(handle: Handle) -> Self {
+    pub fn new(handle: Handle<SocketAddr>) -> Self {
         Self { handle, servers: FastHashMap::default() }
     }
 
