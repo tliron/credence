@@ -9,10 +9,9 @@ For more information and usage examples see the
 [home page](https://github.com/tliron/credence).
 */
 
-mod cli;
+mod commands;
 mod errors;
 mod run;
-mod start;
 
 use run::*;
 

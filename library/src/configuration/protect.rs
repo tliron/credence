@@ -3,7 +3,8 @@ use super::super::resolve::*;
 use {
     ::axum::http::HeaderMap,
     compris::resolve::*,
-    kutil::{cli::depict::*, http::*, std::immutable::*},
+    depiction::*,
+    kutil::{http::*, std::immutable::*},
 };
 
 //

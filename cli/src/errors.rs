@@ -7,6 +7,7 @@ use {credence_lib::configuration::*, kutil::cli::run::*, std::io, thiserror::*, 
 /// Main error.
 #[derive(Debug, Error)]
 pub enum MainError {
+    /// I/O.
     #[error("I/O: {0}")]
     IO(#[from] io::Error),
 

@@ -1,10 +1,6 @@
 use super::super::resolve::*;
 
-use {
-    compris::resolve::*,
-    kutil::{cli::depict::*, std::metric::*},
-    std::time::*,
-};
+use {compris::resolve::*, depiction::*, kutil::std::metric::*, std::time::*};
 
 //
 // RequestsConfiguration

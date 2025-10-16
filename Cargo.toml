@@ -9,6 +9,5 @@ credence-lib = { path = "library" }
 debug = false
 
 [profile.release]
-# Especially important for wasm!
 strip = "debuginfo"
-lto = "thin"        # true is *very* slow to build!
+lto = true
