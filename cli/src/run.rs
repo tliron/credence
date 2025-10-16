@@ -1,10 +1,10 @@
-use super::{cli::*, errors::*};
+use super::{commands::*, errors::*};
 
 use {clap::*, kutil::cli::log::*, tokio::runtime::*};
 
 /// Run.
 pub fn run() -> Result<(), MainError> {
-    let cli = CLI::parse();
+    let cli = Root::parse();
 
     if cli.journald {
         initialize_tracing_journald(cli.verbose + 2)?;
@@ -18,9 +18,9 @@ pub fn run() -> Result<(), MainError> {
             tokio.block_on(cli.start())?;
         }
 
-        Some(SubCommand::Version(version)) => version.run::<CLI>(),
-        Some(SubCommand::Completion(completion)) => completion.run::<CLI>(),
-        Some(SubCommand::Manual(manual)) => manual.run::<CLI>()?,
+        Some(SubCommand::Version(version)) => version.run::<Root>(),
+        Some(SubCommand::Completion(completion)) => completion.run::<Root>(),
+        Some(SubCommand::Manual(manual)) => manual.run::<Root>()?,
     }
 
     Ok(())

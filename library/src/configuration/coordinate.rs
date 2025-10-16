@@ -2,8 +2,9 @@ use super::{super::coordinator::*, error::*};
 
 use {
     compris::resolve::*,
+    depiction::*,
     httpdate::*,
-    kutil::{cli::depict::*, http::*},
+    kutil::http::*,
     notify,
     std::{fs::*, io, path::*},
 };
