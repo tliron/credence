@@ -2,8 +2,8 @@ use super::{super::error::*, host::*};
 
 use {
     compris::resolve::*,
+    depiction::*,
     kutil::{
-        cli::depict::*,
         io::network::ip::*,
         std::{immutable::*, sync::*},
     },

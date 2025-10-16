@@ -79,7 +79,7 @@ impl RenderedPage {
         PathT: AsRef<Path>,
     {
         let path = path.as_ref();
-        let mut file = File::open(path).await.with_path(path)?;
+        let mut file = BufReader::new(File::open(path).await.with_path(path)?);
         let mut string = String::default();
         file.read_to_string(&mut string).await?;
 

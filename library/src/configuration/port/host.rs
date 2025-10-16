@@ -1,10 +1,6 @@
 use super::{super::error::*, acme::*, key::*};
 
-use {
-    compris::resolve::*,
-    kutil::{cli::depict::*, std::immutable::*},
-    std::path::*,
-};
+use {compris::resolve::*, depiction::*, kutil::std::immutable::*, std::path::*};
 
 //
 // Host

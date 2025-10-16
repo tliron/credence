@@ -4,7 +4,7 @@ edition = "2024"
 name = "credence"
 description = "An unfussy web server designed for straightforward authoring and scalable performance"
 version = "0.0.6"
-rust-version = "1.90"
+rust-version = "1.91"
 
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/tliron/credence"
@@ -21,9 +21,10 @@ keywords = ["web", "axum", "tower"]
 
 [dependencies]
 credence-lib = "=0.0.6"
-clap = { version = "4.5.49", features = ["derive", "string"] }
+clap = { version = "4.5.51", features = ["derive", "string"] }
 clap_complete_command = "0.6.1"
-kutil = { version = "=0.0.2", features = ["cli", "http", "clap", "axum"] }
+depiction = "=0.0.1"
+kutil = { version = "=0.0.5", features = ["cli", "http", "clap", "axum"] }
 mimalloc = "0.1.48"
 thiserror = "2.0.17"
 tracing = "0.1.41"

@@ -1,6 +1,7 @@
 use {
     compris::{annotate::*, resolve::*},
-    kutil::{cli::depict::*, http::tls::*},
+    depiction::*,
+    kutil::http::tls::*,
     std::io,
     thiserror::*,
 };

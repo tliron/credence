@@ -1,6 +1,6 @@
 use super::super::configuration::*;
 
-use std::{fs::*, path::*};
+use std::{fs::*, io, path::*};
 
 /// [CredenceConfiguration].
 pub fn load_configuration<PathT>(assets_path: PathT) -> Result<CredenceConfiguration, ConfigurationError>
@@ -13,7 +13,7 @@ where
 
     let mut configuration = if configuration_path.exists() {
         CredenceConfiguration::read(
-            &mut File::open(&configuration_path)?,
+            &mut io::BufReader::new(File::open(&configuration_path)?),
             configuration_path.to_string_lossy().into_owned().into(),
         )?
     } else {
