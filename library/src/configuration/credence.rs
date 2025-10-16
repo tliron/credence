@@ -12,8 +12,8 @@ use super::{
 
 use {
     compris::{annotate::*, normal::*, parse::*, resolve::*, *},
+    depiction::*,
     kutil::{
-        cli::depict::*,
         http::{
             cache::{Cache, CommonCacheKey},
             tower::caching::*,

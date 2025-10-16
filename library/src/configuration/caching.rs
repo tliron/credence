@@ -2,8 +2,8 @@ use super::super::resolve::*;
 
 use {
     compris::resolve::*,
+    depiction::*,
     kutil::{
-        cli::depict::*,
         http::cache::{implementation::moka::*, *},
         std::metric::*,
     },

@@ -46,7 +46,7 @@ pub struct RenderContext<'own> {
     /// Last modified.
     pub last_modified: Option<HttpDate>,
 
-    /// Is JSON? And if so, is it pretty JSON?
+    /// Is it JSON? And if so, is it pretty JSON?
     pub is_json: (bool, bool),
 
     /// Renderer
@@ -125,7 +125,7 @@ impl<'own> RenderContext<'own> {
     fn into_json(self) -> Result<ByteString, StatusCode> {
         Serializer::new(Format::JSON)
             .with_pretty(self.is_json.1)
-            .stringify_modal(&self.variables_into_variant(), &SerializationMode::for_json())
+            .stringify_modal(&self.variables_into_variant())
             .map_err_internal_server("serialize JSON")
     }
 

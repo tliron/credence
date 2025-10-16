@@ -4,7 +4,7 @@ use super::{
     redirect::*,
 };
 
-use {axum::http::*, compris::resolve::*, kutil::cli::depict::*, regex::*};
+use {axum::http::*, compris::resolve::*, depiction::*, regex::*};
 
 //
 // UrlsConfiguration
