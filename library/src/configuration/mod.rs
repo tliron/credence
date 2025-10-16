@@ -4,7 +4,6 @@ mod constants;
 mod coordinate;
 mod credence;
 mod encoding;
-mod error;
 mod files;
 mod port;
 mod protect;
@@ -15,6 +14,6 @@ mod urls;
 
 #[allow(unused_imports)]
 pub use {
-    annotations::*, caching::*, constants::*, coordinate::*, credence::*, encoding::*, error::*, files::*, port::*,
-    protect::*, redirect::*, render::*, requests::*, urls::*,
+    annotations::*, caching::*, constants::*, coordinate::*, credence::*, encoding::*, files::*, port::*, protect::*,
+    redirect::*, render::*, requests::*, urls::*,
 };

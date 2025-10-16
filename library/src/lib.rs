@@ -1,13 +1,7 @@
 // https://stackoverflow.com/a/61417700
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![warn(missing_docs)]
-
-/*!
-An unfussy web server designed for straightforward authoring and scalable performance.
-
-For more information and usage examples see the
-[home page](https://github.com/tliron/credence).
-*/
+#![doc = include_str!("../../README.md")]
 
 /// Configuration.
 pub mod configuration;

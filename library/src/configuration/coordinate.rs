@@ -1,10 +1,12 @@
-use super::{super::coordinator::*, error::*};
+use super::super::coordinator::*;
 
 use {
     compris::resolve::*,
+    depiction::*,
     httpdate::*,
-    kutil::{cli::depict::*, http::*},
+    kutil::http::*,
     notify,
+    problemo::*,
     std::{fs::*, io, path::*},
 };
 
@@ -43,7 +45,7 @@ pub struct CoordinateConfiguration {
 
 impl CoordinateConfiguration {
     /// Validate.
-    pub fn validate<PathT>(&mut self, base_path: PathT, default_paths: Vec<PathBuf>) -> Result<(), ConfigurationError>
+    pub fn validate<PathT>(&mut self, base_path: PathT, default_paths: Vec<PathBuf>) -> Result<(), Problem>
     where
         PathT: AsRef<Path>,
     {

@@ -1,12 +1,13 @@
-use super::{super::error::*, host::*};
+use super::host::*;
 
 use {
     compris::resolve::*,
+    depiction::*,
     kutil::{
-        cli::depict::*,
         io::network::ip::*,
         std::{immutable::*, sync::*},
     },
+    problemo::*,
     std::{io, net::*, path::*, vec},
 };
 
@@ -32,6 +33,7 @@ pub struct Port {
     #[resolve]
     #[depict(option, as(display), style(string))]
     pub address: Option<IpAddr>,
+
     /// Optional zone for IPv6 address.
     #[resolve]
     #[depict(option, style(string))]
@@ -74,7 +76,7 @@ impl Default for Port {
 
 impl Port {
     /// Validate.
-    pub fn validate<PathT>(&mut self, base_path: PathT) -> Result<(), ConfigurationError>
+    pub fn validate<PathT>(&mut self, base_path: PathT) -> Result<(), Problem>
     where
         PathT: AsRef<Path>,
     {

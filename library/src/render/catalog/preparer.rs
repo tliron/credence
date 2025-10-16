@@ -14,7 +14,7 @@ use {axum::http::*, std::result::Result};
 pub struct CatalogPreparer;
 
 impl RenderPreparer for CatalogPreparer {
-    async fn prepare<'own>(&self, context: &mut RenderContext<'own>) -> Result<(), StatusCode> {
+    async fn prepare(&self, context: &mut RenderContext<'_>) -> Result<(), StatusCode> {
         if let Some(catalog) = context.rendered_page.annotations.other.get("catalog") {
             let annotation = CatalogAnnotation::resolve(catalog);
             let uri_path = uri_path_parent(&context.uri_path);

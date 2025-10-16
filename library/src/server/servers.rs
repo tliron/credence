@@ -1,8 +1,9 @@
-use super::{super::configuration::*, server::*, site::*};
+use super::{server::Server, site::*};
 
 use {
-    axum_server::Handle,
+    axum_server::*,
     kutil::std::collections::*,
+    problemo::{common::*, *},
     std::{io, net::*},
     tokio::task::*,
 };
@@ -19,7 +20,7 @@ use {
 /// [Shutdown](kutil::http::axum::Shutdown).
 pub struct Servers {
     /// Axum server handle.
-    pub handle: Handle,
+    pub handle: Handle<SocketAddr>,
 
     /// Servers.
     pub servers: FastHashMap<SocketAddr, Server>,
@@ -27,16 +28,16 @@ pub struct Servers {
 
 impl Servers {
     /// Constructor.
-    pub fn new(handle: Handle) -> Self {
+    pub fn new(handle: Handle<SocketAddr>) -> Self {
         Self { handle, servers: FastHashMap::default() }
     }
 
     /// Add a [Site] to/and its servers.
     ///
     /// Will create new servers if necessary.
-    pub fn add_site(&mut self, site: &Site) -> Result<(), ConfigurationError> {
+    pub fn add_site(&mut self, site: &Site) -> Result<(), Problem> {
         for (tcp_port, port) in &site.configuration.ports {
-            for socket_address in port.socket_addresses(*tcp_port)? {
+            for socket_address in port.socket_addresses(*tcp_port).via(LowLevelError)? {
                 match self.servers.get_mut(&socket_address) {
                     Some(server) => {
                         server.add_router(site, *tcp_port, port)?;
@@ -55,7 +56,7 @@ impl Servers {
     }
 
     /// Start all servers.
-    pub fn start(self) -> Result<JoinSet<io::Result<()>>, ConfigurationError> {
+    pub fn start(self) -> Result<JoinSet<io::Result<()>>, Problem> {
         let handle = self.handle;
 
         let mut tasks = JoinSet::default();

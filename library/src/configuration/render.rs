@@ -6,10 +6,8 @@ use super::{
 
 use {
     compris::{annotate::*, normal::*, resolve::*, *},
-    kutil::{
-        cli::depict::*,
-        std::{collections::*, immutable::*, metric::*},
-    },
+    depiction::*,
+    kutil::std::{collections::*, immutable::*, metric::*},
 };
 
 //

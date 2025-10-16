@@ -2,7 +2,10 @@ use {
     chrono::*,
     compris::resolve::*,
     dateparser::*,
-    kutil::std::string::{ParseError, ParseStr},
+    kutil::std::{
+        error::*,
+        string::{ParseError, ParseStr},
+    },
 };
 
 /// [DateTime] that implements [Resolve].
@@ -20,6 +23,6 @@ pub struct ParseDateTime {}
 
 impl ParseStr<DateTime<Utc>> for ParseDateTime {
     fn parse(representation: &str) -> Result<DateTime<Utc>, ParseError> {
-        parse(representation).map_err(|error| error.to_string().into())
+        Ok(parse(representation).into_string()?)
     }
 }

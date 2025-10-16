@@ -2,7 +2,6 @@ use super::{
     super::{middleware::*, util::*},
     caching::*,
     encoding::*,
-    error::*,
     files::*,
     port::*,
     render::*,
@@ -12,16 +11,14 @@ use super::{
 
 use {
     compris::{annotate::*, normal::*, parse::*, resolve::*, *},
-    kutil::{
-        cli::depict::*,
-        http::{
-            cache::{Cache, CommonCacheKey},
-            tower::caching::*,
-            *,
-        },
-        std::immutable::*,
-    },
+    depiction::*,
+    kutil::{http::*, std::immutable::*},
+    problemo::{common::*, *},
     std::{collections::*, io, path::*},
+    tower_http_response_cache::{
+        cache::{Cache, CommonCacheKey},
+        *,
+    },
 };
 
 //
@@ -74,33 +71,31 @@ pub struct CredenceConfiguration {
 
 impl CredenceConfiguration {
     /// Resolve.
-    pub fn read<ReadT>(reader: &mut ReadT, source: ByteString) -> Result<Self, ConfigurationError>
+    pub fn read<ReadT>(reader: &mut ReadT, source: ByteString) -> Result<Self, Problem>
     where
         ReadT: io::Read,
     {
-        let variant = with_annotations!(
+        with_annotations!(
             Parser::new(Format::YAML)
                 .with_source(source)
                 .with_try_unsigned_integers(true)
                 .parse_reader(reader)
-                .map_err(io::Error::other)?
-        );
-
-        let mut errors = ResolveErrors::default();
-        let configuration = variant.resolve_with_errors(&mut errors).map_err(io::Error::other)?;
-        if errors.is_empty() { Ok(configuration.ok_or(ConfigurationError::None)?) } else { Err(errors.into()) }
+                .via(ConfigurationError::new("credence"))?
+        )
+        .resolve()
+        .via(ConfigurationError::new("credence"))
     }
 
     /// Validate.
-    pub fn validate<PathT>(&mut self, base_path: PathT) -> Result<(), ConfigurationError>
+    pub fn validate<PathT>(&mut self, base_path: PathT) -> Result<(), Problem>
     where
         PathT: AsRef<Path>,
     {
         for port in &mut self.ports.values_mut() {
-            port.validate(&base_path)?;
+            port.validate(&base_path).via(ConfigurationError::new("credence"))?;
         }
 
-        self.files.validate(base_path)
+        self.files.validate(base_path).via(ConfigurationError::new("credence"))
     }
 
     /// Caching layer

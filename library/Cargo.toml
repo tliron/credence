@@ -4,7 +4,7 @@ edition = "2024"
 name = "credence-lib"
 description = "An unfussy web server designed for straightforward authoring and scalable performance"
 version = "0.0.6"
-rust-version = "1.90"
+rust-version = "1.93"
 
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/tliron/credence"
@@ -13,43 +13,37 @@ authors = ["Tal Liron"]
 
 readme = "../README.md"
 
-categories = [
-    "web-programming",
-    "web-programming::http-server",
-] # https://crates.io/category_slugs
+categories = ["web-programming::http-server"] # https://crates.io/category_slugs
 keywords = ["web", "axum", "tower"]
 
 [dependencies]
-axum = "0.8.6"
-axum-server = { version = "0.7.2", features = ["tls-rustls"] }
+axum = "0.8.8"
+axum-server = { version = "0.8.0", features = ["tls-rustls"] }
 build-info = "0.0.42"
-chrono = "0.4.42"
-compris = { version = "=0.0.10", default-features = false, features = [
+chrono = "0.4.43"
+compris = { version = "=0.0.11", default-features = false, features = [
     "derive",
     "serde",
     "yaml",
     "json",
 ] }
 dateparser = "0.2.1"
-duration-str = "0.17.0"
+depiction = { version = "=0.0.1", features = ["derive"] }
+derive_more = "2.1.1"
+duration-str = "0.20.0"
 dynosaur = "0.3.0"
-http = "1.3.1"
 httpdate = "1.0.3"
-hyper = "1.7.0"
-kutil = { version = "=0.0.2", features = [
-    "cli",
+kutil = { version = "=0.0.5", features = [
     "http",
     "io",
     "acme",
     "axum",
     "file",
-    "moka",
     "tls",
     "immutable",
-    "derive",
 ] }
 markdown = "1.0.0"
-minijinja = { version = "2.12.0", features = [
+minijinja = { version = "2.15.1", features = [
     "loader",
     "unicode",
     "json",
@@ -57,7 +51,7 @@ minijinja = { version = "2.12.0", features = [
     "loop_controls",
     "speedups",
 ] }
-minijinja-contrib = { version = "2.12.0", features = [
+minijinja-contrib = { version = "2.15.1", features = [
     "datetime",
     "rand",
     "time",
@@ -67,20 +61,21 @@ minijinja-contrib = { version = "2.12.0", features = [
     "wordcount",
     "wordwrap",
 ] }
-moka = { version = "0.12.11", features = ["future"] }
+moka = { version = "0.12.13", features = ["future"] }
 notify = "8.2.0"
-regex = "1.12.2"
+problemo = "=0.0.11"
+regex = "1.12.3"
 serde = "1.0.228"
-thiserror = "2.0.17"
-tracing = "0.1.41"
-tokio = { version = "1.48.0", features = ["rt-multi-thread", "signal"] }
-tokio-util = "0.7.16"
-tower-http = { version = "0.6.6", features = [
+tracing = "0.1.44"
+tokio = { version = "1.49.0", features = ["rt-multi-thread", "signal"] }
+tokio-util = "0.7.18"
+tower-http = { version = "0.6.8", features = [
     "fs",
     "limit",
     "timeout",
     "trace",
 ] }
+tower-http-response-cache = { version = "0.0.1", features = ["axum", "moka"] }
 
 [build-dependencies]
 build-info-build = "0.0.42"

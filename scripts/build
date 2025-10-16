@@ -7,8 +7,18 @@ HERE=$(dirname "$(readlink --canonicalize "$BASH_SOURCE")")
 cd "$ROOT"
 
 if [ "$1" == -r ]; then
-	m 'building binaries (release)...' "$CYAN"
-	cargo install --path="$ROOT/cli"
+    if [ "$PGO" == true ]; then
+       	m 'building binaries (PGO release)...' "$CYAN"
+        cargo pgo build
+        "$HERE/build-pgo-profiles"
+        cargo pgo optimize build
+
+        TARGET_DIR=$ROOT/target/$(rust_host)/release
+        cp --force "$TARGET_DIR/credence" ~/.cargo/bin/
+    else
+    	m 'building binaries (release)...' "$CYAN"
+    	cargo install --path="$ROOT/cli"
+    fi
 else
 	m 'building binaries (dev nightly)...' "$CYAN"
 	RUSTFLAGS='-Z threads=8 --codegen linker=clang --codegen link-arg=--ld-path=wild' \

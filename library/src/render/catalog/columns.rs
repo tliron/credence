@@ -8,7 +8,7 @@ use {
 //
 
 /// Extra columns.
-pub type ExtraColumns<'own> = FastHashMap<&'own str, RefTraversal<'own, WithAnnotations>>;
+pub type ExtraColumns<'context> = FastHashMap<&'context str, RefTraversal<'context, WithAnnotations>>;
 
 /// Flatten extra columns.
 pub fn flatten_columns(columns: Option<&Map<WithAnnotations>>) -> ExtraColumns<'_> {

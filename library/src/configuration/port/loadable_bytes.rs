@@ -84,7 +84,7 @@ impl TryInto<Bytes> for LoadableBytes {
 }
 
 impl fmt::Display for LoadableBytes {
-    fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
         match self {
             Self::Content(bytes) => write!(formatter, "content: {} bytes", bytes.len()),
             Self::Path(path) => write!(formatter, "path: {}", path.display()),
