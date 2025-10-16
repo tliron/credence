@@ -802,32 +802,7 @@ checksum = "e47641d3deaf41fb1538ac1f54735925e275eaf3bf4d55c81b137fba797e5cbb"
 
 [[package]]
 name = "compris"
-version = "0.0.8"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e2dc77f271af825ccc733dedd886d0d9e4d014a30de86c12a94963531457d044"
-dependencies = [
- "anstream",
- "base64",
- "base64-simd",
- "compris-macros",
- "duplicate",
- "kutil",
- "num-traits",
- "ordered-float",
- "rmp-serde",
- "saphyr-parser",
- "serde",
- "serde-xml-rs 0.8.1",
- "serde_yml",
- "struson",
- "thiserror 2.0.17",
- "tracing",
- "tynm",
-]
-
-[[package]]
-name = "compris"
-version = "0.0.9"
+version = "0.0.10"
 dependencies = [
  "anstream",
  "base64",
@@ -894,11 +869,11 @@ dependencies = [
 
 [[package]]
 name = "credence"
-version = "0.0.5"
+version = "0.0.6"
 dependencies = [
  "clap",
  "clap_complete_command",
- "credence-lib 0.0.4",
+ "credence-lib",
  "kutil",
  "mimalloc",
  "thiserror 2.0.17",
@@ -908,47 +883,14 @@ dependencies = [
 
 [[package]]
 name = "credence-lib"
-version = "0.0.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d27b6ef59e6cd7452c354edda6dad006299db1ea2f3f5a0340df88359dd2f1cd"
+version = "0.0.6"
 dependencies = [
  "axum",
  "axum-server",
  "build-info",
  "build-info-build",
  "chrono",
- "compris 0.0.8",
- "dateparser",
- "duration-str",
- "dynosaur",
- "http",
- "httpdate",
- "hyper",
- "kutil",
- "markdown",
- "minijinja",
- "minijinja-contrib",
- "moka",
- "notify",
- "regex",
- "serde",
- "thiserror 2.0.17",
- "tokio",
- "tokio-util",
- "tower-http",
- "tracing",
-]
-
-[[package]]
-name = "credence-lib"
-version = "0.0.5"
-dependencies = [
- "axum",
- "axum-server",
- "build-info",
- "build-info-build",
- "chrono",
- "compris 0.0.9",
+ "compris",
  "dateparser",
  "duration-str",
  "dynosaur",
