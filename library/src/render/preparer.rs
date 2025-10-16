@@ -10,5 +10,5 @@ use {axum::http::*, std::result::Result};
 #[allow(async_fn_in_trait)]
 pub trait RenderPreparer {
     /// Prepare.
-    async fn prepare<'own>(&self, context: &mut RenderContext<'own>) -> Result<(), StatusCode>;
+    async fn prepare(&self, context: &mut RenderContext) -> Result<(), StatusCode>;
 }

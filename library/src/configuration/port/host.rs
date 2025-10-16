@@ -1,8 +1,10 @@
-use super::{super::error::*, acme::*, key::*};
+use super::{acme::*, key::*};
 
 use {
     compris::resolve::*,
-    kutil::{cli::depict::*, std::immutable::*},
+    depiction::*,
+    kutil::std::immutable::*,
+    problemo::{common::*, *},
     std::path::*,
 };
 
@@ -36,12 +38,12 @@ pub struct Host {
 
 impl Host {
     /// Validate.
-    pub fn validate<PathT>(&mut self, base_path: PathT) -> Result<(), ConfigurationError>
+    pub fn validate<PathT>(&mut self, base_path: PathT) -> Result<(), Problem>
     where
         PathT: AsRef<Path>,
     {
         if self.key.is_some() && self.acme.is_some() {
-            return Err("host cannot have both `key` and `acme`".into());
+            return Err(InvalidError::new("host cannot have both `key` and `acme`").into());
         }
 
         let base_path = base_path.as_ref();

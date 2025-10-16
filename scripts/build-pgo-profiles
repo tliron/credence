@@ -1,0 +1,28 @@
+#!/bin/bash
+set -e
+
+HERE=$(dirname "$(readlink --canonicalize "$BASH_SOURCE")")
+. "$HERE/_env"
+
+TARGET_DIR=$ROOT/target/$(rust_host)/release
+
+"$TARGET_DIR/credence" "$ROOT/examples/blog" -vv &
+CREDENCE_PID=$!
+
+sleep 2
+
+if ! kill -0 "$CREDENCE_PID" 2> /dev/null; then
+	m 'credence not started' "$RED"
+	exit 1
+fi
+
+function the_end () {
+	kill "$CREDENCE_PID"
+	exit 0
+}
+
+trap the_end EXIT
+
+curl http://localhost:8000
+curl http://localhost:8000/robots.txt
+curl http://localhost:8000/image.png

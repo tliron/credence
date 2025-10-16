@@ -10,29 +10,29 @@ use {
 //
 
 /// Catalog annotation.
-pub struct CatalogAnnotation<'own> {
+pub struct CatalogAnnotation<'context> {
     /// Sort column.
-    pub sort_column: Option<RefTraversal<'own, WithAnnotations>>,
+    pub sort_column: Option<RefTraversal<'context, WithAnnotations>>,
 
     /// Sort ascending.
     pub sort_ascending: bool,
 
     /// Extra columns.
-    pub extra_columns: ExtraColumns<'own>,
+    pub extra_columns: ExtraColumns<'context>,
 }
 
-impl<'own> CatalogAnnotation<'own> {
+impl<'context> CatalogAnnotation<'context> {
     /// Constructor.
     pub fn new(
-        sort_column: Option<RefTraversal<'own, WithAnnotations>>,
+        sort_column: Option<RefTraversal<'context, WithAnnotations>>,
         sort_ascending: bool,
-        extra_columns: ExtraColumns<'own>,
+        extra_columns: ExtraColumns<'context>,
     ) -> Self {
         Self { sort_column, sort_ascending, extra_columns }
     }
 
     /// Resolve.
-    pub fn resolve(variant: &'own Variant<WithAnnotations>) -> Self {
+    pub fn resolve(variant: &'context Variant<WithAnnotations>) -> Self {
         let extra_columns = flatten_columns(
             traverse!(variant, "columns").and_then(
                 |columns| {

@@ -8,9 +8,11 @@ use {
     ::axum::middleware::*,
     axum_server::*,
     kutil::{
-        http::{axum::*, tls::*},
+        http::axum::*,
         std::{future::*, immutable::*, string::*},
+        tls::*,
     },
+    problemo::{common::*, *},
     std::net::*,
 };
 
@@ -37,7 +39,7 @@ impl Server {
     /// Add the [Site] for all configured hosts.
     ///
     /// Also adds TLS keys, if configured, to the [TlsContainer].
-    pub fn add_router(&mut self, site: &Site, tcp_port: u16, port: &Port) -> Result<(), ConfigurationError> {
+    pub fn add_router(&mut self, site: &Site, tcp_port: u16, port: &Port) -> Result<(), Problem> {
         if port.hosts.is_empty() {
             let host = ByteString::default();
 
@@ -57,7 +59,11 @@ impl Server {
 
         for host in &port.hosts {
             if self.hosts.contains(&host.name) {
-                return Err(format!("host used more than once for port {}: {}", tcp_port, host.name).into());
+                return Err(InvalidError::new(format!(
+                    "host used more than once for port {}: {}",
+                    tcp_port, host.name
+                ))
+                .into());
             }
 
             self.hosts.push(host.name.clone());
@@ -79,10 +85,10 @@ impl Server {
                         }
 
                         if !has_to_host {
-                            return Err(format!(
+                            return Err(InvalidError::new(format!(
                                 "port {} host {:?} `redirect-to` port {} does not have the host",
                                 tcp_port, host.name, to_tcp_port
-                            )
+                            ))
                             .into());
                         }
 
@@ -91,10 +97,10 @@ impl Server {
                     }
 
                     None => {
-                        return Err(format!(
+                        return Err(InvalidError::new(format!(
                             "port {} host {:?} `redirect-to` port is undefined: {}",
                             tcp_port, host.name, to_tcp_port
-                        )
+                        ))
                         .into());
                     }
                 }
@@ -111,11 +117,13 @@ impl Server {
             if is_tls {
                 if let Some(key) = &host.key {
                     let (certificates, private_key) = key.to_bytes()?;
-                    self.tls.add_key_from_pem(host.name.clone(), &certificates, &private_key)?;
+                    self.tls.add_key_from_pem(host.name.clone(), &certificates, &private_key).via(LowLevelError)?;
                 } else if let Some(acme) = &host.acme {
-                    self.tls.add_resolver_from_acme(acme.provider(host.name.clone()))?;
+                    self.tls.add_resolver_from_acme(acme.provider(host.name.clone())).via(LowLevelError)?;
                 } else {
-                    return Err(format!("listener {:?} has both TLS and non-TLS hosts", port.name).into());
+                    return Err(
+                        InvalidError::new(format!("listener {:?} has both TLS and non-TLS hosts", port.name)).into()
+                    );
                 }
             }
         }
@@ -127,8 +135,8 @@ impl Server {
     pub fn start(
         self,
         socket_address: SocketAddr,
-        server_handle: &Handle,
-    ) -> Result<Option<CapturedIoTask>, ConfigurationError> {
+        server_handle: &Handle<SocketAddr>,
+    ) -> Result<Option<CapturedIoTask>, Problem> {
         let router = match self.host_router.into_router() {
             Some(router) => router,
             None => return Ok(None),
@@ -143,7 +151,7 @@ impl Server {
         } else {
             tracing::info!("starting server: {} with TLS{}", socket_address, display_hosts(&self.hosts));
 
-            let acceptor = self.tls.axum_acceptor()?;
+            let acceptor = self.tls.axum_acceptor().via(LowLevelError)?;
             let server = bind(socket_address).handle(server_handle.clone()).acceptor(acceptor);
             let task = server.serve(router.into_make_service());
             return Ok(Some(Box::pin(task)));

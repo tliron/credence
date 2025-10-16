@@ -16,7 +16,7 @@ use {axum::http::*, std::result::Result};
 pub struct DefaultRenderedPageHandler;
 
 impl RenderPreparer for DefaultRenderedPageHandler {
-    async fn prepare<'own>(&self, context: &mut RenderContext<'own>) -> Result<(), StatusCode> {
+    async fn prepare(&self, context: &mut RenderContext<'_>) -> Result<(), StatusCode> {
         if let Some(socket) = &context.socket {
             context.variables.insert("socket".into(), socket.into());
         }

@@ -4,7 +4,7 @@ edition = "2024"
 name = "credence"
 description = "An unfussy web server designed for straightforward authoring and scalable performance"
 version = "0.0.6"
-rust-version = "1.90"
+rust-version = "1.93"
 
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/tliron/credence"
@@ -13,18 +13,20 @@ authors = ["Tal Liron"]
 
 readme = "../README.md"
 
-categories = [
-    "web-programming",
-    "web-programming::http-server",
-] # https://crates.io/category_slugs
+categories = ["web-programming::http-server"] # https://crates.io/category_slugs
 keywords = ["web", "axum", "tower"]
 
 [dependencies]
 credence-lib = "=0.0.6"
-clap = { version = "4.5.49", features = ["derive", "string"] }
+clap = { version = "4.5.57", features = ["derive", "string"] }
 clap_complete_command = "0.6.1"
-kutil = { version = "=0.0.2", features = ["cli", "http", "clap", "axum"] }
-mimalloc = "0.1.48"
-thiserror = "2.0.17"
-tracing = "0.1.41"
-tokio = { version = "1.48.0", features = ["rt-multi-thread"] }
+depiction = "=0.0.1"
+kutil = { version = "=0.0.5", features = ["cli", "http", "clap", "axum"] }
+mimalloc = { version = "0.1.48", features = ["v3"] }
+problemo = { version = "=0.0.11", features = ["backtrace-external"] }
+tracing = "0.1.44"
+tokio = { version = "1.49.0", features = ["rt-multi-thread"] }
+
+[profile.release]
+strip = "debuginfo"
+lto = true
