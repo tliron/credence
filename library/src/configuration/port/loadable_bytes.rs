@@ -11,8 +11,9 @@ use {
 /// A [Bytes] that be specified either explicitly or as a path from which to read it.
 ///
 /// Resolves from:
+///
 /// * A single-key map where the key is either "content" or "path".
-/// * Directly from a [Blob].
+/// * Directly from a [Bytes].
 #[derive(Clone, Debug, Resolve)]
 pub enum LoadableBytes {
     /// Content.

@@ -6,7 +6,7 @@ use {axum::http::*, std::result::Result};
 // RenderPreparer
 //
 
-/// [RenderedPage] preparer.
+/// [RenderedPage](super::RenderedPage) preparer.
 #[allow(async_fn_in_trait)]
 pub trait RenderPreparer {
     /// Prepare.

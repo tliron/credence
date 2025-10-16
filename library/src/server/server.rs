@@ -9,7 +9,7 @@ use {
     axum_server::*,
     kutil::{
         http::{axum::*, tls::*},
-        std::{future::*, string::*, immutable::*},
+        std::{future::*, immutable::*, string::*},
     },
     std::net::*,
 };
@@ -20,7 +20,7 @@ use {
 
 /// Credence server.
 ///
-/// Listens on a single [SocketAddr] with one or more [Router].
+/// Listens on a single [SocketAddr] with one or more [Router](::axum::Router).
 #[derive(Clone, Debug, Default)]
 pub struct Server {
     /// Hosts.

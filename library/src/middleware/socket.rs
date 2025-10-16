@@ -21,7 +21,7 @@ impl SocketMiddleware {
         Self { socket }
     }
 
-    /// To be used with [map_request_with_state].
+    /// To be used with [map_request_with_state](axum::middleware::map_request_with_state).
     pub async fn function(State(state_self): State<Self>, mut request: Request) -> Request {
         request.extensions_mut().insert(state_self.socket.clone());
         request

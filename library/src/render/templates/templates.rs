@@ -10,7 +10,7 @@ use {
 
 const DEFAULT_TEMPLATE_CONTENT: &str = include_str!("default.jinja");
 
-/// Default [DateTime] format.
+/// Default [datetime format](https://time-rs.github.io/book/api/format-description.html).
 pub const DEFAULT_DATE_TIME_FORMAT: &str = "[month repr:long] [day padding:none], [year]";
 
 //

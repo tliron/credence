@@ -19,11 +19,12 @@ use {::axum::extract::*, kutil::http::*};
 ///
 /// All of the above is handled by attaching a [DeferredResponse] to the *request* (not the
 /// response). We do this because request mapping middleware cannot return a normal response. Thus,
-/// we also need to install [CatchMiddleware], which "catches" the deferment and generates the
-/// actual response.
+/// we also need to install [CatchMiddleware](super::CatchMiddleware), which "catches" the
+/// deferment and generates the actual response.
 ///
 /// (Remember that axum runs through layers in the *reverse* order in which they are
-/// programmatically added, so add [CatchMiddleware] first *and then* add [FacadeMiddleware].)
+/// programmatically added, so add [CatchMiddleware](super::CatchMiddleware) first *and then* add
+/// [FacadeMiddleware].)
 ///
 /// We referred to "normal" responses above, because actually request mapping can return "abnormal"
 /// responses: as a [Result::Err]. We can consider them abnormal because they circumvent the
@@ -40,7 +41,7 @@ impl FacadeMiddleware {
         Self { configuration }
     }
 
-    /// To be used with [map_request_with_state].
+    /// To be used with [map_request_with_state](::axum::middleware::map_request_with_state).
     pub async fn function(State(state_self): State<Self>, mut request: Request) -> Request {
         let uri_path = match request.uri().decoded_path() {
             Some(uri_path) => uri_path,

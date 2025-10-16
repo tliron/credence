@@ -802,9 +802,7 @@ checksum = "e47641d3deaf41fb1538ac1f54735925e275eaf3bf4d55c81b137fba797e5cbb"
 
 [[package]]
 name = "compris"
-version = "0.0.7"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9a210e1483f089a8cf856a8cec1f78d35c209617a70ec2dfc99900f6b6b4ccb3"
+version = "0.0.8"
 dependencies = [
  "anstream",
  "base64",
@@ -827,9 +825,7 @@ dependencies = [
 
 [[package]]
 name = "compris-macros"
-version = "0.0.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "64daa2330ae00f3aa3b39f8b003a36c63d32a6054a2f63576cc322ee6a44009b"
+version = "0.0.5"
 dependencies = [
  "deluxe",
  "proc-macro2",
@@ -873,7 +869,7 @@ dependencies = [
 
 [[package]]
 name = "credence"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
  "clap",
  "clap_complete_command",
@@ -887,7 +883,7 @@ dependencies = [
 
 [[package]]
 name = "credence-lib"
-version = "0.0.3"
+version = "0.0.4"
 dependencies = [
  "axum",
  "axum-server",
@@ -1776,9 +1772,7 @@ dependencies = [
 
 [[package]]
 name = "kutil"
-version = "0.0.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "91a742852132e38b30e286f9a987b207da44bd857ae0002cae9b76f13e5b66b3"
+version = "0.0.2"
 dependencies = [
  "anstream",
  "anstyle",
@@ -1829,9 +1823,7 @@ dependencies = [
 
 [[package]]
 name = "kutil-cli-macros"
-version = "0.0.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5b05793d12ce1ba18c047bdd78bf9fc1f084d0680555aea38942655edba5f46e"
+version = "0.0.7"
 dependencies = [
  "deluxe",
  "proc-macro2",
@@ -1841,9 +1833,7 @@ dependencies = [
 
 [[package]]
 name = "kutil-std-macros"
-version = "0.0.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9ed9257241a8e4608f1cb8366a79c1a65bba5f95a08a31c1341d154743a5a045"
+version = "0.0.3"
 dependencies = [
  "deluxe",
  "proc-macro2",
